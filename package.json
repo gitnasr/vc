@@ -4,5 +4,10 @@
     "backblaze-b2": "^1.7.1",
     "dotenv": "^17.0.1",
     "express": "^5.1.0"
+  },
+  "scripts": {
+    "dev": "nodemon index",
+    "build": "npm run build",
+    "start": "node index"
   }
 }
