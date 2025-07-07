@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Upload to Backblaze</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        background: #f7f7f7;
+      }
+      input,
+      button {
+        padding: 10px;
+        margin: 5px 0;
+        width: 100%;
+      }
+      #result {
+        margin-top: 15px;
+        font-weight: bold;
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>🚀 Upload Direct Link to Backblaze B2</h2>
+    <input type="text" id="url" placeholder="Enter direct file URL" />
+    <button onclick="upload()">Upload</button>
+    <div id="result"></div>
+
+    <script>
+      async function upload() {
+        const url = document.getElementById("url").value;
+        document.getElementById("result").textContent = "Uploading... ⏳";
+
+        const res = await fetch("/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url }),
+        });
+
+        const data = await res.json();
+        if (data.error) {
+          document.getElementById(
+            "result"
+          ).textContent = `❌ Error: ${data.error}`;
+        } else {
+          document.getElementById(
+            "result"
+          ).innerHTML = `✅ Done! <a href="${data.link}" target="_blank">Download</a>`;
+        }
+      }
+    </script>
+  </body>
+</html>
